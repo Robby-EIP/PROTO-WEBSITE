@@ -67,23 +67,27 @@
           <br><br><br><br>
           <oj-form-layout max-columns="2" direction="row">
             <oj-text-area resize-behavior="both" label-hint="Write your code here !" value="{{textInput}}"></oj-text-area>
+            <oj-file-picker selection-mode="single" 
+                            on-oj-select='[[selectListener]]' 
+                            disabled='[[isDisabled]]'>
+            </oj-file-picker> 
             <oj-button on-oj-action="[[submitCode]]">Submit</oj-button>
           </oj-form-layout>
         </div>
         <!-- Add a placeholder for the Twitch embed -->
-        <div id="twitch-embed"></div>
+        <!-- <div id="twitch-embed"></div> -->
           <!-- Load the Twitch embed script -->
-          <script src="https://player.twitch.tv/js/embed/v1.js"></script>
+          <!-- <script src="https://player.twitch.tv/js/embed/v1.js"></script> -->
 
           <!-- Create a Twitch.Player object. This will render within the placeholder div -->
-          <script type="text/javascript">
-            new Twitch.Player("twitch-embed", {
-              channel: "chowh1",
-              width: "100%",
-              height: 600,
-            });
-          </script>
-        </div>
+          <!-- <script type="text/javascript"> -->
+            <!-- new Twitch.Player("twitch-embed", { -->
+              <!-- channel: "chowh1", -->
+              <!-- width: "100%", -->
+              <!-- height: 600, -->
+            <!-- }); -->
+          <!-- </script> -->
+        <!-- </div> -->
       </div>
       <footer class="oj-web-applayout-footer" role="contentinfo">
         <div class="oj-web-applayout-footer-item oj-web-applayout-max-width oj-text-secondary-color oj-text-sm">
