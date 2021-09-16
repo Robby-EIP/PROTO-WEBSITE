@@ -15,6 +15,7 @@ class RootViewModel {
   textInput: ko.Observable<string>;
   isDisabled: ko.Observable<boolean>;
   file: ko.Observable<FileList>;
+  file1: any;
 
   constructor() {
     // media queries for repsonsive layouts
@@ -33,33 +34,44 @@ class RootViewModel {
 
   public selectListener = (event: FilePickerElement.ojSelect) : void => {
     const files: FileList = event.detail.files;
+    console.log(files);
     this.file(files);
+    this.file1 = event.detail.files;
+    console.log(this.file())
   }
 
   public submitCode = async () : Promise<void> => {
     this.isDisabled(true);
     console.log(this.textInput());
 
-    if (this.textInput() === '' || this.textInput() == null) {
+    if (this.textInput() !== '' && this.textInput != null) {
       let body = {
         "code": this.textInput(),
       }
-      let response: Response = await fetch('url', {
+      let response: Response = await fetch('http://localhost:8000/push/rawcode', {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
         headers: {
-          "content-type" : "application/json;charset=UTF-8",
-          "access-control-allow-origin": "*"
+          "Content-Type" : "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*"
         },
         body: JSON.stringify(body),
-      })
+      });
+      let res = await response.json();
+      console.log(res);
+      // alert(res);
     } else {
       const formData: FormData = new FormData();
-      formData.append('myFile', this.file().item[0]);
-  
-      let response = await fetch('url', {
+      console.log('data ', this.file())
+      console.log('data ', this.file().item)
+      console.log('data ', this.file().item[0])
+      console.log('data1 ', this.file1);
+      console.log('data1 ', this.file1[0]);
+      // formData.append('myFile', this.file().item[0]);
+      formData.append('myFile', this.file1);
+      let response = await fetch('http://localhost:8000/push/filecode', {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
