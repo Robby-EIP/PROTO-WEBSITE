@@ -33,9 +33,9 @@
     <link rel="icon" href="css/images/favicon.ico" type="image/x-icon" />
 
     <!-- This is the main css file for the default theme -->
-    <!-- injector:theme -->
-    <link rel="stylesheet" href="css/libs/oj/v9.0.0/redwood/oj-redwood-min.css" type="text/css"/>
-    <!-- endinjector -->
+<!-- injector:theme -->
+<link rel="stylesheet" href="css/redwood/9.0.4/web/redwood.css" id="css" />
+<!-- endinjector -->
     <!-- This contains icon fonts used by the starter template -->
     <link rel="stylesheet" href="css/demo-alta-site-min.css" type="text/css"/>
     <link rel="stylesheet" id="uxiconFont" href="https://static.oracle.com/cdn/fnd/gallery/2010.0.0/images/iconfont/ojuxIconFont.min.css">
@@ -63,14 +63,16 @@
         <!-- Place your page content here -->
         <div>
           <h1>Welcome to our prototype website</h1>
-          <h8>Start writting some code and press the button to sumbit it !</h8>
+          <h6>Start writting some code and press the button to sumbit it !</h6>
           <br><br><br><br>
-          <oj-form-layout max-columns="2" direction="row">
+          <oj-form-layout max-columns="3" direction="row">
             <oj-text-area resize-behavior="both" label-hint="Write your code here !" value="{{textInput}}"></oj-text-area>
             <oj-file-picker selection-mode="single" 
                             on-oj-select='[[selectListener]]' 
                             disabled='[[isDisabled]]'>
-            </oj-file-picker> 
+            </oj-file-picker>
+            <oj-bind-text value="{{selectedFile}}"></oj-bind-text>
+            <br><br>
             <oj-button on-oj-action="[[submitCode]]">Submit</oj-button>
           </oj-form-layout>
         </div>

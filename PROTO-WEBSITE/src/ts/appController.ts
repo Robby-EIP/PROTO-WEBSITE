@@ -15,7 +15,7 @@ class RootViewModel {
   textInput: ko.Observable<string>;
   isDisabled: ko.Observable<boolean>;
   file: ko.Observable<FileList>;
-  file1: any;
+  selectedFile: ko.Observable<string>;
 
   constructor() {
     // media queries for repsonsive layouts
@@ -26,6 +26,7 @@ class RootViewModel {
     this.textInput = ko.observable('');
     this.isDisabled = ko.observable(false);
     this.file = ko.observable();
+    this.selectedFile = ko.observable('');
     // header
 
     // application Name used in Branding Area
@@ -36,13 +37,14 @@ class RootViewModel {
     const files: FileList = event.detail.files;
     console.log(files);
     this.file(files);
-    this.file1 = event.detail.files;
-    console.log(this.file())
+    this.selectedFile(files[0].name);
+    console.log('test1', this.file())
+    console.log('test2', this.file()[0])
   }
 
   public submitCode = async () : Promise<void> => {
     this.isDisabled(true);
-    console.log(this.textInput());
+    // console.log(this.textInput());
 
     if (this.textInput() !== '' && this.textInput != null) {
       let body = {
@@ -61,29 +63,27 @@ class RootViewModel {
       });
       let res = await response.json();
       console.log(res);
-      // alert(res);
+      alert(res.success);
     } else {
-      const formData: FormData = new FormData();
-      console.log('data ', this.file())
-      console.log('data ', this.file().item)
-      console.log('data ', this.file().item[0])
-      console.log('data1 ', this.file1);
-      console.log('data1 ', this.file1[0]);
-      // formData.append('myFile', this.file().item[0]);
-      formData.append('myFile', this.file1);
-      let response = await fetch('http://localhost:8000/push/filecode', {
+      // let fileInput: HTMLInputElement = document.getElementById('input_test') as HTMLInputElement;
+      // console.log(fileInput.files[0]);
+      const formData = new FormData();
+
+      // const file = fileInput.files[0];
+
+      formData.append('file', this.file()[0]);
+      // formData.append('file', fileInput.files[0]);
+
+      let response = await fetch('http://localhost:8000/push/image', {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
         credentials: 'same-origin',
-        headers: {
-          "content-type" : "application/json;charset=UTF-8",
-          "access-control-allow-origin": "*"
-        },
-        body: formData,
+        body: formData
       });
       let res = await response.json();
-      console.log(res);
+      console.log('res == ', response);
+      alert(res.success);
     }
 
     this.isDisabled(false);
